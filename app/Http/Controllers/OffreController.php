@@ -148,14 +148,39 @@ class OffreController extends Controller
             'titre' => "required",
             'description' => "required",
             'localisation' => "",
-            'prix' => "",
-            'images' => "",
-            'type' =>""
+            'photo' => "image"
+            
 
 
         ]);
 
-        Offre::whereId($id)->update($data);
+        if($request->photo){
+            $path = basename($request->photo->store('getimg1'));
+
+            //Base resolution
+            $image = InterventionImage::make($request->photo)->widen(500)->encode();
+            Storage::put('getimg2/'.$path, $image);
+            
+         }
+
+        $off= Offre::findOrFail($id);
+        $off->titre = $request->titre;
+        $off->description = $request->description;
+        $off->localisation = $request->localisation;
+        $off->prix = $request->prix;
+        $off->etat = "active";
+        $off->type = $request->type;
+
+        if($request->has('sanitaire'))
+            $off->sanitaire=true;
+        else
+            $off->sanitaire=false;
+
+        if($request->photo)
+            $off->images=$path;
+
+        $off->save();
+
 
         return redirect("/home")->with("message","Offre mis à jour avec succès !");
     }

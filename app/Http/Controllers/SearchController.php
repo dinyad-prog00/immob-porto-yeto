@@ -27,11 +27,11 @@ class SearchController extends Controller
      */
     public function get()
     {
-        $keyword = array("récent");
+        $keywords[] = "tous";
         $dmds=Demande::all();
         $offs=Offre::all();
 
-        return view("annonce.search",compact("dmds"),compact("offs"));
+        return view("annonce.search",compact("dmds"),compact("offs","keywords"));
     }
 
 
@@ -48,7 +48,7 @@ class SearchController extends Controller
         $offs = Offre::where("created_at",">",'01-01-2020 00:00:00');
         $dmds = Demande::where("created_at",">" ,'01-01-2020 00:00:00');
         
-        $keyword = [];
+        $keywords=[] ; 
 
         if($prix=$request->get('opp')){
             $op="";
@@ -59,13 +59,15 @@ class SearchController extends Controller
                 $op=">";
             else
                 $op="=";
+
+            $keywords[]="prix ".$op." ".$prix."FCFA";
             
             $offs = $offs->where("prix",$op, $prix);
             $dmds = $dmds->where("prix",$op ,$prix);
         }
 
         if($loca=$request->get('localisation')){
-
+            $keywords[]=$loca;
             $offs = $offs->where("localisation","like", '%'.ucfirst($loca).'%');
             $dmds = $dmds->where("localisation","like" ,'%'.ucfirst($loca).'%');
         }
@@ -73,15 +75,20 @@ class SearchController extends Controller
         if($san=$request->get('sanitaire')){
             $offs = $offs->where("sanitaire",$san=="oui");
             $dmds = $dmds->where("sanitaire",$san=="oui");
+            if($san=="oui")
+                $keywords[]="sanitaire";
+            else
+                $keywords[]="non sanitaire";
         }
 
         if($type=$request->get('type')){
-            $keyword[]=$type;
+            $keywords[]=$type;
             $offs = $offs->where("type",$type);
             $dmds = $dmds->where("type",$type);
         }
 
         if($request->get('date')){
+            $keywords[]="récents";
                 $offs = $offs->orderBy("created_at","desc");
                 $dmds = $dmds->orderBy("created_at","desc");
         }
@@ -97,7 +104,7 @@ class SearchController extends Controller
                 $dmds = [];
         }
 
-        return view("annonce.search",compact("offs"),compact("dmds"),compact("keyword"));
+        return view("annonce.search",compact("offs"),compact("dmds","keywords"));
     }
 
     /**

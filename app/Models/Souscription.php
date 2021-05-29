@@ -12,4 +12,13 @@ class Souscription extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function offre() {
+        return $this->belongsTo(Offre::class);
+    }
+
+    //Profile
+    public function rdv() {
+        return $this->hasMany(Rendezvous::class);
+    }
 }

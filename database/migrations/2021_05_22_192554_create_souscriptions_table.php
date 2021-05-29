@@ -24,6 +24,7 @@ class CreateSouscriptionsTable extends Migration
                 ->onDelete('cascade');
 
             $table->unsignedBigInteger('offre_id');
+            
             $table->foreign('offre_id')
                 ->references('id')
                 ->on('offres')

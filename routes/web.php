@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware("verified");;
 
 Route::resource('profiles','ProfileController')->middleware("auth");
 
@@ -34,6 +34,9 @@ Route::resource('dmd','DemandeController')->middleware("auth");
 
 Route::get('/offres/{id}', [App\Http\Controllers\OffreController::class, 'show'])->name('offre.show2');
 Route::get('/dmds/{id}', [App\Http\Controllers\DemandeController::class, 'show'])->name('dmd.show2');
+
+Route::get('/sous/{id}', [App\Http\Controllers\SouscriptionController::class, 'show'])->name('sous.show')->middleware("auth");
+
 
 
 

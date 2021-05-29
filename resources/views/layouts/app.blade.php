@@ -69,7 +69,7 @@
 
                                     <a class="dropdown-item" href="{{ route('profiles.create') }}"
                                        >
-                                        {{ __('Profile') }}
+                                        {{ __('Profil') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -84,10 +84,13 @@
                 </div>
             </div>
         </nav>
+        
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    @include('layouts.footer')
+
 </body>
 </html>

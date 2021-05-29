@@ -8,7 +8,7 @@
                 <div class="card-header bg-primary ">Modification d'offre</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('offre.update',$off->id) }}">
+                    <form method="POST" action="{{ route('offre.update',$off->id) }}"enctype="multipart/form-data" >
                         @csrf
                         @method('PATCH')
                         @if (session()->has('message'))
@@ -48,6 +48,49 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="sanitaire" class="col-md-4 col-form-label text-md-right">Sanitaire</label>
+                            <div class="col-md-6 ">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="sanitaire" id="sanitaire" {{ old('sanitaire') ? 'checked' : '' }}>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row ">
+                            <label for="photo" class="col-md-4 col-form-label  text-md-right ">Image</label>
+
+                            <div class="col-md-6">
+                                <input id="photo" type="file" class=" form-control @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}"  autocomplete="photo" autofocus>
+                                
+                                @error('photo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="type" class="col-md-4 col-form-label text-md-right">Type</label>
+
+                            <div class="col-md-6">
+                                <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}"  autocomplete="type" autofocus>
+                                    <option value="location">Location</option>
+                                    <option value="vente">Vente</option>
+                                </select>
+
+                                @error('type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
 
                         <div class="form-group row">
                             <label for="localisation" class="col-md-4 col-form-label text-md-right">Localisation</label>
@@ -76,24 +119,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="image" class="col-md-4 col-form-label text-md-right">Image</label>
-
-                            <div class="col-md-6">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image',$off->image) }}"  autocomplete="image" autofocus>
-
-                                @error('image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                       
-
-                        
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

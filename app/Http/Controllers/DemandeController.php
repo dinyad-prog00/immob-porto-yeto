@@ -60,20 +60,24 @@ class DemandeController extends Controller
             
          }
 
-        $of= new Demande;
-        $of->titre = $request->titre;
-        $of->description = $request->description;
-        $of->localisation = $request->localisation;
-        $of->prix = $request->prix;
-        $of->renouvelable = $request->renouv;
-        $of->duree=$request->duree;
-        $of->etat = "active";
-        $of->type = $request->type;
-        $of->user_id = $request->user;
+        $dmd= new Demande;
+        $dmd->titre = $request->titre;
+        $dmd->description = $request->description;
+        $dmd->localisation = $request->localisation;
+        $dmd->prix = $request->prix;
+        $dmd->renouvelable = $request->renouv;
+        $dmd->duree=$request->duree;
+        $dmd->etat = "active";
+        $dmd->type = $request->type;
+        $dmd->user_id = $request->user;
         if($request->photo)
-            $of->images=$path;
+            $dmd->images=$path;
+        if($request->has('sanitaire'))
+            $dmd->sanitaire=true;
+        else
+            $dmd->sanitaire=false;
 
-        $of->save();
+        $dmd->save();
         return redirect("/home")->with("message","Demande bien publiée.");
     }
 
@@ -123,16 +127,40 @@ class DemandeController extends Controller
         $data = $request->validate([
             'titre' => "required",
             'description' => "required",
-            'localisation' => "",
-            'duree' => "",
-            'renouvelable' => "",
-            'prix' => "",
-            'images' => ""
+            'photo' => "image"
 
 
         ]);
 
-        Demande::whereId($id)->update($data);
+        if($request->photo){
+            $path = basename($request->photo->store('getimg1'));
+
+            //Base resolution
+            $image = InterventionImage::make($request->photo)->widen(500)->encode();
+            Storage::put('getimg2/'.$path, $image);
+            
+         }
+
+        $dmd=Demande::findOrFail($id);
+
+        $dmd->titre = $request->titre;
+        $dmd->description = $request->description;
+        $dmd->localisation = $request->localisation;
+        $dmd->prix = $request->prix;
+        $dmd->renouvelable = $request->renouv;
+        $dmd->duree=$request->duree;
+        $dmd->etat = "active";
+        $dmd->type = $request->type;
+
+        if($request->photo)
+            $dmd->images=$path;
+
+        if($request->has('sanitaire'))
+            $dmd->sanitaire=true;
+        else
+            $dmd->sanitaire=false;
+
+        $dmd->save();
 
         return redirect("/home")->with("message","Demande mise à jour avec succès !");
     }

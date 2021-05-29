@@ -10032,3 +10032,7 @@ h3 {
 .container-search {
   max-width: 960px;
 }
+
+.annonce-img{
+  max-height: 200px;
+}

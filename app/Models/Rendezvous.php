@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rendezvous extends Model
 {
     use HasFactory;
+    public function sous() {
+        return $this->belongsTo(Souscription::class);
+    }
 }

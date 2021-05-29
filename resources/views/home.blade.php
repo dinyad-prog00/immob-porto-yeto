@@ -69,9 +69,9 @@
                   <div class="col mb-2">
                     <div class="card shadow-sm">
                       @if($off->images == "")
-                      <img src="/images/img1.jpg">
+                      <img src="/images/img1.jpg" class="annonce-img">
                       @else
-                      <img src="/getimg2/{{$off->images }}">
+                      <img src="/getimg2/{{$off->images }}" class="annonce-img">
                       @endif
 
                       <div class="card-body">
@@ -112,9 +112,9 @@
                   <div class="col mb-2">
                     <div class="card shadow-sm">
                       @if($dmd->images == "")
-                      <img src="/images/img3.jpg">
+                      <img src="/images/img3.jpg" class="annonce-img">
                       @else
-                      <img src="/getimg2/{{$dmd->images }}">
+                      <img src="/getimg2/{{$dmd->images }}" class="annonce-img">
                       @endif
                       <div class="card-body">
                           <h3>{{ $dmd->titre }}</h3>
@@ -180,7 +180,7 @@
                     <td>{{ $sous->titre }}</td>
                     <td>{{ $sous->message }}</td>
                     <td>{{ $sous->created_at->format("d/m/Y  H:i:s") }}</td>
-                    <td><a href="#" role="button" class="btn btn-primary btn-sm">Voir</a></td>
+                    <td><a href="{{route('sous.show',$sous->id)}}" role="button" class="btn btn-primary btn-sm">Voir</a></td>
                     <td><a href="{{route('rdv.create',$sous->id)}}" role="button" class="btn btn-success btn-sm">Rendez-vous</a></td>
                   </tr>
                 @endforeach

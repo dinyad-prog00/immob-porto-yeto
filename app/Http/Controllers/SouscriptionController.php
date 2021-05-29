@@ -88,6 +88,9 @@ class SouscriptionController extends Controller
     public function show($id)
     {
         //
+        $sous=Souscription::findOrFail($id);
+        $rdv = $sous->rdv;
+        return view("annonce.sousshow",compact("sous","rdv"));
     }
 
     /**

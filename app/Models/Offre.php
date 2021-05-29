@@ -23,5 +23,10 @@ class Offre extends Model
     		return false;
     }
 
+    //Profile
+    public function souscription() {
+        return $this->hasMany(Souscription::class);
+    }
+
     
 }

@@ -101,10 +101,13 @@
         </form>
 
       </div>
-      <div class="col-md-7 col-lg-8">
+      <div class="col-md-7 mt-5 col-lg-8">
         <h4 class="mb-3">Résultats de votre recherche</h4>
         <hr class="my-4">
-            <strong>Mots clés : </strong>
+            <strong>Mots clés : </strong> 
+            @foreach($keywords  as $wd)
+             {{$wd}}, 
+            @endforeach
          <hr class="my-4">
 
 
