@@ -1,0 +1,8 @@
+.dona{
+	color: red;
+}
+
+.custom-file-label::after {
+    content: "Parcourir";
+}
+
