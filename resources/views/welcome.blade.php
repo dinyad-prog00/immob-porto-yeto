@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="/images/index9.jpeg" alt="Third slide">
+      <img class="d-block w-100" src="/images/index5.jpeg" alt="Third slide">
 
       <div class="carousel-caption d-none d-md-block">
         <h5>Rechercher et satisfaire vos besoins</h5>
