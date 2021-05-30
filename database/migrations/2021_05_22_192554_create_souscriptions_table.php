@@ -17,6 +17,8 @@ class CreateSouscriptionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('etat');
+            $table->string('titre');
+            $table->string('message');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
