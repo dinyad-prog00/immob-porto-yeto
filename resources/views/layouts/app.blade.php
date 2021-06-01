@@ -39,6 +39,11 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        @admin
+                            <li class="nav-item">
+                             <a class="nav-link" href="{{route('admin.index')}}">Administration</a>
+                            </li>
+                        @endadmin
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -51,6 +56,7 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('S\'inscrire') }}</a>
                                 </li>
                             @endif
+                            
                         @else
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('home') }}">{{ __('Tableau de bord') }}</a>
@@ -80,6 +86,7 @@
                                 </div>
                             </li>
                         @endguest
+                        
                     </ul>
                 </div>
             </div>

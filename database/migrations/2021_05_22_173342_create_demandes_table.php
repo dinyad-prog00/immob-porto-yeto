@@ -21,7 +21,7 @@ class CreateDemandesTable extends Migration
             $table->string('duree')->nullable();
             $table->string('renouvelable');
             $table->unsignedBigInteger('prix')->nullable();
-            $table->string('images')->nullable();
+            //$table->string('images')->nullable();
             $table->string('etat');
             $table->boolean('sanitaire');
             $table->string('type');

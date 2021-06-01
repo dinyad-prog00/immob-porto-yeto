@@ -11,23 +11,23 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="/images/index7.jpeg" alt="First slide">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Vos offres sont attendus</h5>
-        <p>Proposer des offres de ventes ou de locations immobilières</p>
+      <img class="d-block w-100" src="/images/f1.jpg" alt="First slide" style="max-height: 500px;">
+      <div class="carousel-caption  d-md-block  text-white " style="opacity: 25">
+        <h5 class=" fw-bold fs-2">Vos offres sont attendus</h5>
+        <p class=" fs-md-2">Proposer des offres de ventes ou de locations immobilières</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="/images/index8.jpeg" alt="Second slide">
-      <div class="carousel-caption d-none d-md-block">
+      <img class="d-block w-100" src="/images/f2.jpg" alt="Second slide" style="max-height: 500px;">
+      <div class="carousel-caption  d-md-block  text-white">
         <h5>Vous cherchez de chambres ou de maisons à louer, à acheter ?</h5>
         <p>Faites des demandes d'achats ou de locations immobiliers</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="/images/index5.jpeg" alt="Third slide">
+      <img class="d-block w-100" src="/images/f3.jpg" alt="Third slide" style="max-height: 500px;">
 
-      <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-caption  d-md-block  text-white">
         <h5>Rechercher et satisfaire vos besoins</h5>
         <p>Quelque soit ce que vous voulez, parcourez les annonces, triez selon vos critères.</p>
       </div>
@@ -50,7 +50,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Les locations du moment</h1>
-        <p class="lead text-muted">Nous vous avons sélectionné les meilleurs offres et demandes de locations immobilière. Vous n’avez qu’à choisir celui qui vous correspond le mieux !</p>
+        <p class="lead text-muted">Nous vous avons sélectionné les meilleurs offres et demandes de locations immobilières. Vous n’avez qu’à choisir celui qui vous correspond le mieux !</p>
         <p>
           <!--<a href="{{ route('dmd.create')}}" class="btn btn-primary my-2">Demander</a>
           <a href="{{ route('offre.create')}}" class="btn btn-success my-2">Offrir.......</a><br>-->
@@ -84,9 +84,9 @@
         <div class="col mb-2">
           <div class="card shadow-sm">
             @if($off->images == "")
-              <img src="/images/img1.jpg" class="annonce-img">
+              <img src="/images/img1.jpg" class="annonce-img" alt="Image">
             @else
-              <img src="/getimg2/{{$off->images }}" class="annonce-img">
+              <img src="/getimg2/{{$off->images }}" class="annonce-img" alt="Image">
             @endif
             <div class="card-body">
                 <h3>{{ $off->titre }}</h3>
@@ -120,7 +120,7 @@
 </div>
 </div>
 @endif
-{{count($dmds)}}
+
 
 @if(count($dmds) != 0)
       <div class="col-lg-6 col-md-8 mx-auto text-center">
@@ -139,9 +139,9 @@
         <div class="col mb-2">
           <div class="card shadow-sm">
             @if($dmd->images == "")
-              <img src="/images/img3.jpg" class="annonce-img">
+              <img src="/images/img3.jpg" class="annonce-img" alt="Image">
             @else
-              <img src="/getimg2/{{$dmd->images }}" class="annonce-img">
+              <img src="/getimg2/{{$dmd->images }}" class="annonce-img" alt="Image">
             @endif
             <div class="card-body">
                 <h3>{{ $dmd->titre }}</h3>
@@ -154,8 +154,11 @@
               
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Voir</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Offrir</button>
+                  @if($dmd->user_id != Auth::id())
+                    <a href="mailto:{{$dmd->user->email}}" title="Envoyer un émail à {{$dmd->user->name}}">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Contacter</button>
+                    </a>
+                   @endif
                 </div>
                 <small class="text-muted"><strong>{{ $dmd->prix }}FCFA</strong></small>
               </div>

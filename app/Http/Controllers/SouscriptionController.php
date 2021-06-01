@@ -76,7 +76,7 @@ class SouscriptionController extends Controller
 
 
         $rdv->save();
-        return redirect("/home")->with("message","Rendez-vous bien pris.");
+        return redirect()->route("sous.show",$id)->with("message","Rendez-vous bien pris.");
     }
 
     /**
@@ -90,6 +90,7 @@ class SouscriptionController extends Controller
         //
         $sous=Souscription::findOrFail($id);
         $rdv = $sous->rdv;
+        $rdv = Rendezvous::where("souscription_id",$id)->orderBy("created_at","desc")->get();
         return view("annonce.sousshow",compact("sous","rdv"));
     }
 

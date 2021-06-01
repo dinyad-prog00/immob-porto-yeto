@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Offre;
+use App\Models\User;
 use App\Models\Souscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as InterventionImage;
+use App\Mail\SousMail;
+use Illuminate\Support\Facades\Mail;
+
 
 
 
@@ -97,6 +101,12 @@ class OffreController extends Controller
         $ss->offre_id = $offre->id;
         $ss->etat = "active";
         $ss->save();
+
+        $off=Offre::find($ss->offre_id);
+
+
+
+        Mail::to($off->user->email)->send(new SousMail($off->user->name,$request->user()->name,$off->titre,$ss->message)); 
 
         return  redirect("/home");
 
@@ -193,11 +203,29 @@ class OffreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $off=Offre::findOrFail($id);
+        $off->delete();
+        return redirect()->route("admin.index")->with("message","Offre  bien supprimé.");
     }
 
     public function retour()
     {
         return back();
+    }
+
+    public function activer($id){
+        $off= Offre::findOrFail($id);
+        $off->etat="active";
+        $off->save();
+        return redirect()->route("offre.show",$id)->with("message","Offre bien activé.");
+    }
+
+    public function desactiver($id)
+    {
+        $off= Offre::findOrFail($id);
+        $off->etat="desactive";
+        $off->save();
+        return redirect()->route("offre.show",$id)->with("message","Offre bien desactivé.");
+
     }
 }

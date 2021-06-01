@@ -174,5 +174,25 @@ class DemandeController extends Controller
     public function destroy($id)
     {
         //
+        $dmd=Demande::findOrFail($id);
+        $dmd->delete();
+        return redirect()->route("admin.index")->with("message","Demande  bien supprimée.");
+    
+    }
+
+    public function activer($id){
+        $dmd= Demande::findOrFail($id);
+        $dmd->etat="active";
+        $dmd->save();
+        return redirect()->route("dmd.show",$id)->with("message","Demande bien activée.");
+    }
+
+    public function desactiver($id)
+    {
+        $dmd= Demande::findOrFail($id);
+        $dmd->etat="desactive";
+        $dmd->save();
+        return redirect()->route("dmd.show",$id)->with("message","Demande bien desactivé.");
+
     }
 }

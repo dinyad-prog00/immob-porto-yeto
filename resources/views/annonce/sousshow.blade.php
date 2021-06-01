@@ -13,7 +13,11 @@
             <div class="card">
                 
                 <div class="card-header bg-dark text-light">
-                    <h4>Souscription "{{$sous->titre}}" pour l'offre <strong>{{$sous->offre->titre}}</strong> de <strong>{{$sous->offre->user->name}}</strong></h4>
+                    <h4>Souscription "{{$sous->titre}}" pour l'offre <strong>{{$sous->offre->titre}}</strong> 
+                      @if($sous->offre->user->id != Auth::id())
+                      de <strong>{{$sous->offre->user->name}}</strong>
+                      @endif
+                    </h4>
                     
                     
 
@@ -58,27 +62,102 @@
                   <div class="col ">
                     <h4>Message</h4>
                     <p class="card-text">{{ $sous->message }}</p>
-                  </div>   
+                  </div> 
+                  @foreach($rdv as $r)  
                   <div class="col">
                     <div class="card">
-                      <div class="card-header bg-primary text-light">Rendezvous</div>
+                      <div class="card-header bg-primary text-light">Rendezvous {{$r->id}}</div>
                       <div class="card-body">
-                        @if(count($rdv)!=0)
-                        <strong>Lieu : </strong> {{$rdv[0]->lieu}}
+                      
+                        <strong>Lieu : </strong> {{$r->lieu}}
                         <hr>
-                        <strong>Date et heure: </strong> {{$rdv[0]->date_rdv}}
-                        <hr>
+                        <strong>Date et heure : </strong> {{$r->date_rdv}}
 
-
-                        <strong>Etat : </strong> Actif
+                       <hr>
+                      <div class="row">
+                      <div class="col">
+                          
+                        <strong>Etat : </strong> 
+                        @if($r->etat == "active")
+                        <span class="text-danger">Non confirmé</span>
+                        @elseif($r->etat == "confirme")
+                        <span class="text-success">Confirmé</span>
+                        @elseif($r->etat == "annule")
+                        <span class="text-danger">Annulé</span>
                         @endif
-
                       </div>
-                    </div>
+                      <div class="col">
+                      @if($sous->offre->user->id == Auth::id())
+                        <div class="d-flex justify-content-between align-items-center">
+                      
+                          @if($r->etat == "active")
+                            <div class="btn-group">
+                              <a role="button" class="btn btn-outline-success btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('confirme{{ $r->id }}').submit();">
+                                Confirmer
+                              </a>
+                            </div>
 
-                    <br><br>
-                  </div>              
+                            <form id="confirme{{ $r->id }}" action="{{ route('rdv.confirme',[$sous->id,$r->id]) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                          </form>
+                          @elseif($r->etat == "confirme")
+                          <div class="btn-group">
+                              <a role="button" class="btn btn-outline-success btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('deconfirme{{ $r->id }}').submit();">
+                                Déconfirmer
+                              </a>
+                            </div>
+
+                            <form id="deconfirme{{ $r->id }}" action="{{ route('rdv.deconfirme',[$sous->id,$r->id]) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                            </form>
+                            @endif
+                          </div>
+                      @else
+                      <div class="d-flex justify-content-between align-items-center">
+                      
+                          @if($r->etat == "active")
+                            <div class="btn-group">
+                              <a role="button" class="btn btn-outline-success btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('annule{{ $r->id }}').submit();">
+                                Annuler
+                              </a>
+                            </div>
+
+                            <form id="annule{{ $r->id }}" action="{{ route('rdv.annule',[$sous->id,$r->id]) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                          </form>
+                          @elseif($r->etat == "annule")
+                          <div class="btn-group">
+                              <a role="button" class="btn btn-outline-success btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('active{{ $r->id }}').submit();">
+                                Activer
+                              </a>
+                            </div>
+
+                            <form id="active{{ $r->id }}" action="{{ route('rdv.active',[$sous->id,$r->id]) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                            </form>
+                            @endif
+                          </div>
+                      @endif
+                      
+                      
+                    </div>
+                    
+                    <hr>
                   </div>
+                  </div>
+                </div>
+              </div>
+
+            @endforeach           
+                  
 
 
 

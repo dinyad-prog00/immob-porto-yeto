@@ -18,7 +18,8 @@ class CreateRendezvousesTable extends Migration
             $table->timestamps();
             $table->string('lieu');
             $table->string('etat');
-             $table->unsignedBigInteger('souscription_id');
+            $table->dateTime("date_rdv");
+            $table->unsignedBigInteger('souscription_id');
             $table->foreign('souscription_id')
                 ->references('id')
                 ->on('souscriptions')

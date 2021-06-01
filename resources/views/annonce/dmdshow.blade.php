@@ -38,7 +38,7 @@
 
                     <div class="col mb-2">
                     <div class="card shadow-sm">
-                      <img src="/images/img3.jpg">
+                      <img src="/images/img3.jpg" alt="Image">
                       <div class="card-body">
                           <h3>{{ $dmd->titre }}</h3>
                           
@@ -49,6 +49,10 @@
                             @if($dmd->user_id == Auth::id())
                             <a href="{{route('dmd.edit',$dmd->id)}}">
                               <button type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
+                            </a>
+                            @else
+                            <a href="mailto:{{$dmd->user->email}}" title="Envoyer un émail à {{$dmd->user->name}}">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Contacter</button>
                             </a>
                             @endif
                             
@@ -79,9 +83,50 @@
                     <br><br>
                     <strong>Durrée : </strong><br>
                     {{ $dmd->duree}}
-                    @if($dmd->renouvelable == "oui")
-                      renouvelable.
+
+                    <hr>
+                    <div class="row">
+                      <div class="col">
+                          <strong>Etat : </strong>
+                          @if($dmd->etat == "active")
+                          <span class="text-success">Actif</span>
+                          @else
+                          <span class="text-danger">Non actif</span>
+                          @endif
+                      </div>
+                      <div class="col">
+                      @if($dmd->user_id == Auth::id())
+                      <div class="d-flex justify-content-between align-items-center">
+                          @if($dmd->etat == "desactive")
+                        <div class="btn-group">
+                            <a role="button" class="btn btn-outline-success btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('active{{ $dmd->id }}').submit();">
+                              Activer
+                          </a>
+                        </div>
+
+                        <form id="active{{ $dmd->id }}" action="{{ route('dmd.active', $dmd->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                        </form>
+                      @else
+                        <div class="btn-group">
+                          <a role="button" class="btn btn-outline-danger btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('desactive{{ $dmd->id }}').submit();">
+                          Désactiver
+                          </a>
+                        </div>
+
+                        <form id="desactive{{ $dmd->id }}" action="{{ route('dmd.desactive', $dmd->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                        </form>
+                      @endif  
+                    </div>
                     @endif
+                  </div>
+                </div>
+                <hr>
 
                   </div> 
 

@@ -43,7 +43,7 @@
     </div>
 </div>
 
-              <div class="bd-example">
+        <div class="bd-example">
                   
 
         <div class="tab-content" id="nav-tabContent">
@@ -71,7 +71,7 @@
                       @if($off->images == "")
                       <img src="/images/img1.jpg" class="annonce-img">
                       @else
-                      <img src="/getimg2/{{$off->images }}" class="annonce-img">
+                      <img src="/getimg2/{{$off->images }}" class="annonce-img" alt="Image">
                       @endif
 
                       <div class="card-body">
@@ -112,9 +112,9 @@
                   <div class="col mb-2">
                     <div class="card shadow-sm">
                       @if($dmd->images == "")
-                      <img src="/images/img3.jpg" class="annonce-img">
+                      <img src="/images/img3.jpg" class="annonce-img" alt="Image">
                       @else
-                      <img src="/getimg2/{{$dmd->images }}" class="annonce-img">
+                      <img src="/getimg2/{{$dmd->images }}" class="annonce-img" alt="Image">
                       @endif
                       <div class="card-body">
                           <h3>{{ $dmd->titre }}</h3>
@@ -122,7 +122,7 @@
                         <p class="card-text">{{ $dmd->description }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                           <div class="btn-group">
-                            <a href="{{route('dmd.show',$dmd->id)}}">
+                            <a href="{{route('dmd.show2',$dmd->id)}}">
                               <button type="button" class="btn btn-sm btn-outline-secondary">Consulter</button>
                             </a>
                             <a href="{{route('dmd.edit',$dmd->id)}}">

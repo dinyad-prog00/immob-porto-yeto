@@ -38,7 +38,7 @@
 
                     <div class="col mb-2">
                     <div class="card shadow-sm">
-                      <img src="/images/img1.jpg">
+                      <img src="/images/img1.jpg" alt="Image">
                       <div class="card-body">
                           <h3>{{ $off->titre }}</h3>
                           
@@ -54,9 +54,13 @@
                                 <a href="/offre/{{ $off->id }}/souscreate">
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#staticBackdropLive{{ $off->id }}">Souscrire</button></a>
                               @endif
+                              <a href="mailto:{{$off->user->email}}" title="Envoyer un émail à {{$off->user->name}}">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Contacter</button>
+                              </a>
                             @endif
-                            
+                          
                           </div>
+                          
                           <small class="text-muted"><strong>{{ $off->prix }}FCFA</strong></small>
                         </div>
                       </div>
@@ -78,7 +82,56 @@
                     <br><br>
 
                     <strong>Localisation : </strong> <br>
-                    {{ $off->localisation}}
+                    {{ $off->localisation}} <br>
+
+                    <hr>
+                    <div class="row">
+                      <div class="col">
+                          <strong>Etat : </strong>
+                          @if($off->etat == "active")
+                          <span class="text-success">Actif</span>
+                          @else
+                          <span class="text-danger">Non actif</span>
+                          @endif
+                      </div>
+                      <div class="col">
+                        @if($off->user_id == Auth::id())
+                    <div class="d-flex justify-content-between align-items-center">
+                      
+                      @if($off->etat == "desactive")
+                      <div class="btn-group">
+                      <a role="button" class="btn btn-outline-success btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('active{{ $off->id }}').submit();">
+                        Activer
+                      </a>
+                      </div>
+
+                      <form id="active{{ $off->id }}" action="{{ route('offre.active', $off->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                      </form>
+                      @else
+                      <div class="btn-group">
+                      <a role="button" class="btn btn-outline-danger btn-sm"
+                                onclick="event.preventDefault(); document.getElementById('desactive{{ $off->id }}').submit();">
+                        Désactiver
+                      </a>
+                      </div>
+
+                      <form id="desactive{{ $off->id }}" action="{{ route('offre.desactive', $off->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PATCH')
+                      </form>
+                      @endif
+                      
+                      
+                    </div>
+                    @endif
+                  </div>
+                  </div>
+                  <hr>
+
+                    
 
                   </div> 
 
@@ -132,7 +185,7 @@
                        <td>{{ $s->titre }}</td>
                        <td>{{ $s->message }}</td>
                        <td>{{ $s->created_at->format("d/m/Y  H:i:s") }}</td>
-                       <td><a href="#" role="button" class="btn btn-primary btn-sm">Voir</a></td>
+                       <td><a href="{{route('sous.show',$s->id)}}" role="button" class="btn btn-primary btn-sm">Voir</a></td>
                        </tr>
                       
                       @endforeach

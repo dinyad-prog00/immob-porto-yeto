@@ -29,9 +29,9 @@ class ProfileController extends Controller
     public function create()
     {
         //
-        $pf=Profile::where('user_id',Auth::id())->get();
-        if(count($pf)!=0)
-            return redirect("/profiles/".$pf[0]->id."/edit");
+        $pf=Profile::where('user_id',Auth::id())->first();
+        if( $pf != null )
+            return redirect("/profiles/".$pf->id."/edit");
         else
             return view("profile.create");
     }
@@ -86,10 +86,7 @@ class ProfileController extends Controller
      */
     public function edit( $i)
     {
-        //
-        if($i != Auth::id() )
-            $i = Auth::id();
-            //return back()->with("message","Désolé ! Vous ne pouvez modifier que votre profile !");
+        
         $pf=Profile::findOrFail($i);
         return view("profile.edit",compact("pf"));
 
