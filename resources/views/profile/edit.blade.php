@@ -11,7 +11,7 @@
                 <div class="card shadow-sm">
                     <img src="/getimg2/{{Auth::user()->profile[0]->photo}}">
                     <div class="card-body">
-                        Votre photo de profile
+                        Votre photo de profil
                     </div>
                </div>
             </div>
@@ -25,7 +25,7 @@
                     
             <div class="card">
 
-                <div class="card-header bg-primary ">Modifiez votre prifile et enregistrez </div>
+                <div class="card-header bg-primary ">Modifiez votre prifil et enregistrez </div>
 
                     <div class="card-body">
                     <form method="post" action="{{ route('profiles.update',$pf->id) }}" enctype="multipart/form-data">

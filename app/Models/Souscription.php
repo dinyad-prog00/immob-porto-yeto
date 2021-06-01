@@ -17,7 +17,7 @@ class Souscription extends Model
         return $this->belongsTo(Offre::class);
     }
 
-    //Profile
+    
     public function rdv() {
         return $this->hasMany(Rendezvous::class);
     }

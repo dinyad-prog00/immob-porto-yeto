@@ -5,12 +5,12 @@
     <div class="row justify-content-center py-lg-5">
         <div class="col-md-8 py-5">
             <div class="card">
-                <div class="card-header bg-primary ">Compltètez votre prifile et enregistrez </div>
+                <div class="card-header bg-primary ">Souscription </div>
 
                 <div class="card-body">
                     <h3>{{ $offre->titre }}</h3>
                     <h6 class="text-muted"> Par {{ $offre->user->name }}</h6>
-                    <h5>Souscription</h5>
+                    
                     <p>
                         Donnez un titre à votre souscription. <br>
                         Vous pouvez laisser un message de souscription à {{ $offre->user->name }}

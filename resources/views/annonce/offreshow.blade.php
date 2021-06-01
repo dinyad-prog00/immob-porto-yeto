@@ -38,7 +38,12 @@
 
                     <div class="col mb-2">
                     <div class="card shadow-sm">
-                      <img src="/images/img1.jpg" alt="Image">
+                       @if($off->images == "")
+                        <img src="/images/img1.jpg" class="annonce-img">
+                        @else
+                        <img src="/getimg2/{{$off->images }}" class="annonce-img" alt="Image">
+                       @endif
+                       
                       <div class="card-body">
                           <h3>{{ $off->titre }}</h3>
                           

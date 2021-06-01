@@ -104,7 +104,7 @@
                           </form>
                           @elseif($r->etat == "confirme")
                           <div class="btn-group">
-                              <a role="button" class="btn btn-outline-success btn-sm"
+                              <a role="button" class="btn btn-outline-danger btn-sm"
                                 onclick="event.preventDefault(); document.getElementById('deconfirme{{ $r->id }}').submit();">
                                 Déconfirmer
                               </a>
@@ -121,7 +121,7 @@
                       
                           @if($r->etat == "active")
                             <div class="btn-group">
-                              <a role="button" class="btn btn-outline-success btn-sm"
+                              <a role="button" class="btn btn-outline-danger btn-sm"
                                 onclick="event.preventDefault(); document.getElementById('annule{{ $r->id }}').submit();">
                                 Annuler
                               </a>

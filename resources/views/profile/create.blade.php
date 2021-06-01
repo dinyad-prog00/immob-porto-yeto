@@ -5,7 +5,7 @@
     <div class="row justify-content-center py-lg-5">
         <div class="col-md-8 py-5">
             <div class="card">
-                <div class="card-header bg-primary ">Compltètez votre prifile et enregistrez </div>
+                <div class="card-header bg-primary ">Compltètez votre prifil et enregistrez </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('profiles.store') }}" enctype="multipart/form-data">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rendezvous;
+use App\Mail\RdvMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class RdvController extends Controller
 {
@@ -11,6 +14,8 @@ class RdvController extends Controller
         $rdv= Rendezvous::findOrFail($id);
         $rdv->etat="confirme";
         $rdv->save();
+        Mail::to($rdv->user()->email)->send(new RdvMail($rdv,Auth::user()->name)); 
+
         return redirect()->route("sous.show",$idsous)->with("message","Rendez-vous bien confirmé.");
     }
 
@@ -18,6 +23,7 @@ class RdvController extends Controller
         $rdv= Rendezvous::findOrFail($id);
         $rdv->etat="active";
         $rdv->save();
+        Mail::to($rdv->user()->email)->send(new RdvMail($rdv,Auth::user()->name)); 
         return redirect()->route("sous.show",$idsous)->with("message","Rendez-vous bien deconfirmé.");
     }
 
